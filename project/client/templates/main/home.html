@@ -1,0 +1,56 @@
+{% extends "_base.html" %}
+{% block content %}
+<style type="text/css">
+    .flex {display: flex; padding: 0 5px;}
+    .flex-item {  flex: 1 1 auto; margin: 0 5px;}
+        </style>
+<div class="flex">
+    <div class="flex-item">
+  <form action="" method="post">
+  <p><b>Выберите группы адресов откуда нужен доступ:</b><br>
+   <p><select>
+    <option selected value="subnet1">subnet1</option>
+    <option value="subnet2">subnet2</option>
+    <option value="subnet3">subnet3</option>
+    <option value="subnet4">subnet4</option>
+   </select></p>
+   <p><b>Выберите группы адресов куда нужен доступ:</b><br>
+   <p><select>
+    <option selected value="subnet1">subnet1</option>
+    <option value="subnet2">subnet2</option>
+    <option value="subnet3">subnet3</option>
+    <option value="subnet4">subnet4</option>
+   </select></p>
+   <p><b>Выберите группы приложений куда нужен доступ:</b><br>
+   <p><select>
+    <option selected value="any">ANY</option>
+    <option value="app_group1">app_group1</option>
+    <option value="app_group2">app_group2</option>
+    <option value="app_group3">app_group3</option>
+    <option value="app_group4">app_group4</option>
+   </select></p>
+   <p><input type="submit" value="Отправить"></p>
+  </form>
+        </div>
+  <div class="flex-item">
+      <form name="test" method="post" action="{{ url_for('main.handle_data') }}">
+          <h5>Создание группы адресов</h5>
+  <p><b>Название группы:</b><br>
+   <input type="text" size="40" name="groupName">
+  <p><b>Список адресов:</b><br>
+   <input type="text" size="40" name="addressList">
+  <p><input type="submit" value="Отправить"></p>
+ </form>
+    </div>
+    <div class="flex-item">
+      <form name="test" method="post" action="">
+          <h5>Создание группы приложений</h5>
+  <p><b>Название группы:</b><br>
+   <input type="text" size="40">
+  <p><b>Список приложений:</b><br>
+   <input type="text" size="40">
+  <p><input type="submit" value="Отправить"></p>
+ </form>
+    </div>
+</div>
+{% endblock %}
