@@ -31,7 +31,7 @@ def handle_data():
 
 
         flash("Address group added")
-        return redirect(url_for("main.home"))
+     g   return redirect(url_for("main.home"))
     # group_name = request.form['groupName']
     # address_list = request.form['addressList']
     return redirect(url_for("main.about"))
