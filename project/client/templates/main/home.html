@@ -1,4 +1,5 @@
 {% extends "_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 <style type="text/css">
     .flex {display: flex; padding: 0 5px;}
@@ -8,48 +9,28 @@
     <div class="flex-item">
   <form action="" method="post">
   <p><b>Выберите группы адресов откуда нужен доступ:</b><br>
-   <p><select>
-    <option selected value="subnet1">subnet1</option>
-    <option value="subnet2">subnet2</option>
-    <option value="subnet3">subnet3</option>
-    <option value="subnet4">subnet4</option>
-   </select></p>
+   {{ wtf.form_field(select_addr_form.addr_groups) }}
    <p><b>Выберите группы адресов куда нужен доступ:</b><br>
-   <p><select>
-    <option selected value="subnet1">subnet1</option>
-    <option value="subnet2">subnet2</option>
-    <option value="subnet3">subnet3</option>
-    <option value="subnet4">subnet4</option>
-   </select></p>
+   {{ wtf.form_field(select_addr_form.addr_groups) }}
    <p><b>Выберите группы приложений куда нужен доступ:</b><br>
-   <p><select>
-    <option selected value="any">ANY</option>
-    <option value="app_group1">app_group1</option>
-    <option value="app_group2">app_group2</option>
-    <option value="app_group3">app_group3</option>
-    <option value="app_group4">app_group4</option>
-   </select></p>
-   <p><input type="submit" value="Отправить"></p>
+   {{ wtf.form_field(select_app_form.app_groups) }}
+   <button class="btn btn-success" type="submit">Send</button>
   </form>
         </div>
   <div class="flex-item">
-      <form name="test" method="post" action="{{ url_for('main.handle_data') }}">
+      <form name="post" method="post" action="{{ url_for('main.handle_data_addr') }}">
           <h5>Создание группы адресов</h5>
-  <p><b>Название группы:</b><br>
-   <input type="text" size="40" name="groupName">
-  <p><b>Список адресов:</b><br>
-   <input type="text" size="40" name="addressList">
-  <p><input type="submit" value="Отправить"></p>
+   {{ wtf.form_field(addr_form.name_addrs) }}
+   {{ wtf.form_field(addr_form.addresses) }}
+  <button class="btn btn-success" type="submit">Send</button>
  </form>
     </div>
     <div class="flex-item">
-      <form name="test" method="post" action="">
+      <form name="post" method="post" action="{{ url_for('main.handle_data_app') }}">
           <h5>Создание группы приложений</h5>
-  <p><b>Название группы:</b><br>
-   <input type="text" size="40">
-  <p><b>Список приложений:</b><br>
-   <input type="text" size="40">
-  <p><input type="submit" value="Отправить"></p>
+   {{ wtf.form_field(app_form.name_apps) }}
+   {{ wtf.form_field(app_form.apps) }}
+  <button class="btn btn-success" type="submit">Send</button>
  </form>
     </div>
 </div>
