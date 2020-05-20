@@ -49,10 +49,12 @@ class Addrgroup(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
     addresses = db.Column(db.String(255), nullable=False)
+    project = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, name, addresses):
+    def __init__(self, name, addresses, project):
         self.name = name
         self.addresses = addresses
+        self.project = project
 
 
 class Appgroup(db.Model):
@@ -62,7 +64,9 @@ class Appgroup(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
     apps = db.Column(db.String(255), nullable=False)
+    project = db.Column(db.String(255), nullable=False)
 
-    def __init__(self, name, apps):
+    def __init__(self, name, apps, project):
         self.name = name
         self.apps = apps
+        self.project = project

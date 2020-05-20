@@ -7,6 +7,8 @@ from project.server import bcrypt, db
 from project.server.models import Addrgroup, Appgroup
 from project.server.main.forms import AddressForm, AppForm, SelectAddrForm, SelectAppForm
 
+import json
+
 main_blueprint = Blueprint("main", __name__)
 
 
@@ -31,13 +33,17 @@ def about():
 
 @main_blueprint.route("/handle_data_addr", methods=["GET", "POST"])
 def handle_data_addr():
+    json_to_api = {}
     addr_form = AddressForm(request.form)
     if addr_form.validate_on_submit():
-        group_name = Addrgroup(name=addr_form.name_addrs.data, addresses=addr_form.addresses.data)
+        group_name = Addrgroup(project=addr_form.project_addr.data, name=addr_form.name_addrs.data, addresses=addr_form.addresses.data)
         db.session.add(group_name)
         db.session.commit()
-
-
+        json_to_api["id"] = group_name.name
+        json_to_api["address"] = group_name.addresses
+        json_to_api["type"] = "ip"
+        json.dumps(json_to_api)
+        flash(json_to_api)
         flash("Address group added", "success")
         return redirect(url_for("main.home"))
     return redirect(url_for("main.about"))
@@ -45,13 +51,18 @@ def handle_data_addr():
 
 @main_blueprint.route("/handle_data_app", methods=["GET", "POST"])
 def handle_data_app():
+    json_to_api = {}
     app_form = AppForm(request.form)
     if app_form.validate_on_submit():
-        group_name = Appgroup(name=app_form.name_apps.data, apps=app_form.apps.data)
+        group_name = Appgroup(project=app_form.project_pp.data, name=app_form.name_apps.data, apps=app_form.apps.data)
         db.session.add(group_name)
         db.session.commit()
 
-
+        json_to_api["id"] = group_name.name
+        json_to_api["address"] = group_name.addresses
+        json_to_api["type"] = "ip"
+        json.dumps(json_to_api)
+        flash(json_to_api)
         flash("App group added", "success")
         return redirect(url_for("main.home"))
     return redirect(url_for("main.about"))

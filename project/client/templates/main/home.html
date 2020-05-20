@@ -20,18 +20,28 @@
   <div class="flex-item">
       <form name="post" method="post" action="{{ url_for('main.handle_data_addr') }}">
           <h5>Создание группы адресов</h5>
+   {{ wtf.form_field(addr_form.project_addr) }}
    {{ wtf.form_field(addr_form.name_addrs) }}
    {{ wtf.form_field(addr_form.addresses) }}
+  <button class="btn btn-success" type="button" id="add">Add address</button>
   <button class="btn btn-success" type="submit">Send</button>
  </form>
     </div>
     <div class="flex-item">
       <form name="post" method="post" action="{{ url_for('main.handle_data_app') }}">
           <h5>Создание группы приложений</h5>
+   {{ wtf.form_field(app_form.project_app) }}
    {{ wtf.form_field(app_form.name_apps) }}
    {{ wtf.form_field(app_form.apps) }}
   <button class="btn btn-success" type="submit">Send</button>
  </form>
     </div>
 </div>
+
+
+    <script
+  src="https://code.jquery.com/jquery-3.5.1.js"
+  integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+  crossorigin="anonymous"></script>
+    <script src="home.js"></script>
 {% endblock %}
