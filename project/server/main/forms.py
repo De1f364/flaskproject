@@ -29,6 +29,13 @@ class AppForm(FlaskForm):
     apps = StringField("Applications")
 
 
+class SelectProjectForm(FlaskForm):
+    project_select = SelectField("Project", choices=[("api-common", "API-Common"),
+                                                   ("api-invest", "API-Invest"),
+                                                   ("api-travel", "API-Travel"),
+                                                   ("api-mvno", "API-MVNO")])
+
+
 class SelectAddrForm(FlaskForm):
     addr_groups = QuerySelectField(query_factory=lambda: Addrgroup.query.all(), get_label="name")
 

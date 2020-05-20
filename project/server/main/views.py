@@ -5,7 +5,7 @@ from flask import render_template, Blueprint, request, flash, redirect, url_for
 
 from project.server import bcrypt, db
 from project.server.models import Addrgroup, Appgroup
-from project.server.main.forms import AddressForm, AppForm, SelectAddrForm, SelectAppForm
+from project.server.main.forms import AddressForm, AppForm, SelectAddrForm, SelectAppForm, SelectProjectForm
 
 import json
 
@@ -16,11 +16,13 @@ main_blueprint = Blueprint("main", __name__)
 def home():
     addr_form = AddressForm()
     app_form = AppForm()
+    select_project = SelectProjectForm()
     select_addr_form = SelectAddrForm()
     select_app_form = SelectAppForm()
     return render_template("main/home.html",
                            addr_form=addr_form,
                            app_form=app_form,
+                           select_project=select_project,
                            select_addr_form=select_addr_form,
                            select_app_form=select_app_form)
 
