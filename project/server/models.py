@@ -70,3 +70,19 @@ class Appgroup(db.Model):
         self.name = name
         self.apps = apps
         self.project = project
+
+
+class Accesses(db.Model):
+    __tablename__ = "accesses"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(255), nullable=False)
+    src = db.Column(db.String(255), nullable=False)
+    dst = db.Column(db.String(255), nullable=False)
+    app = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, name, src, dst, app):
+        self.name = name
+        self.src = src
+        self.dst = dst
+        self.app = app

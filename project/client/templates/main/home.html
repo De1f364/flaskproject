@@ -7,8 +7,9 @@
         </style>
 <div class="flex">
     <div class="flex-item">
-  <form action="" method="post">
+  <form action="{{ url_for('main.handle_data_accesses') }}" method="post" name="post">
    {{ wtf.form_field(select_project.project_select) }}
+   {{ wtf.form_field(access_name.name) }}
   <p><b>Выберите группы адресов откуда нужен доступ:</b><br>
    {{ wtf.form_field(select_addr_form.addr_groups) }}
    <p><b>Выберите группы адресов куда нужен доступ:</b><br>

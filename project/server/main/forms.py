@@ -36,6 +36,10 @@ class SelectProjectForm(FlaskForm):
                                                    ("api-mvno", "API-MVNO")])
 
 
+class AccessName(FlaskForm):
+    name = StringField("Access name")
+
+
 class SelectAddrForm(FlaskForm):
     addr_groups = QuerySelectField(query_factory=lambda: Addrgroup.query.all(), get_label="name")
 
