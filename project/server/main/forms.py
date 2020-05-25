@@ -41,8 +41,9 @@ class AccessName(FlaskForm):
 
 
 class SelectAddrForm(FlaskForm):
-    addr_groups = QuerySelectField(query_factory=lambda: Addrgroup.query.all(), get_label="name")
+    src_groups = QuerySelectField("src groups", query_factory=lambda: Addrgroup.query.all(), get_label="name")
+    dst_groups = QuerySelectField("dst groups", query_factory=lambda: Addrgroup.query.all(), get_label="name")
 
 
 class SelectAppForm(FlaskForm):
-    app_groups = QuerySelectField(query_factory=lambda: Appgroup.query.all(), get_label="name")
+    app_groups = QuerySelectField("apps", query_factory=lambda: Appgroup.query.all(), get_label="name")

@@ -1,11 +1,44 @@
 {% extends "_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
+
+<style type="text/css">
+    .flex {display: flex; padding: 0 5px;}
+    .flex-item {  flex: 1 1 auto; margin: 0 5px;}
+        </style>
 
 <div class="body-content">
   <div>
-    <h1>About</h1>
+    <h1>Create groups</h1>
     <hr><br>
-    <p>Add some content here!</p>
+      <div class="flex">
+    <div class="flex-item">
+      <form name="post" method="post" action="{{ url_for('main.handle_data_addr') }}">
+          <h5>Создание группы адресов</h5>
+          <div class="addr-form">
+   {{ wtf.form_field(addr_form.project_addr) }}
+   {{ wtf.form_field(addr_form.name_addrs) }}
+   {{ wtf.form_field(addr_form.addresses) }}
+              </div>
+  <button class="btn btn-info" type="button" id="add-address">ADD</button>
+  <button class="btn btn-danger" type="button" id="remove-address">Remove</button>
+  <button class="btn btn-success" type="submit">Send</button>
+ </form>
+    </div>
+      <div class="flex-item">
+      <form name="post" method="post" action="{{ url_for('main.handle_data_app') }}">
+          <h5>Создание группы приложений</h5>
+          <div class="app-form">
+   {{ wtf.form_field(app_form.project_app) }}
+   {{ wtf.form_field(app_form.name_apps) }}
+   {{ wtf.form_field(app_form.apps) }}
+          </div>
+  <button class="btn btn-info" type="button" id="add-app">ADD</button>
+  <button class="btn btn-danger" type="button" id="remove-app">Remove</button>
+  <button class="btn btn-success" type="submit">Send</button>
+ </form>
+    </div>
+      </div>
   </div>
 </div>
 

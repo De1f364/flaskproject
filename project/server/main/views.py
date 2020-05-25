@@ -31,8 +31,13 @@ def home():
 
 @main_blueprint.route("/about/")
 def about():
-    flash(Addrgroup.query.with_entities(Addrgroup.name))
-    return render_template("main/about.html")
+    addr_form = AddressForm()
+    app_form = AppForm()
+    select_project = SelectProjectForm()
+    return render_template("main/about.html",
+                           addr_form=addr_form,
+                           app_form=app_form,
+                           select_project=select_project)
 
 
 @main_blueprint.route("/handle_data_addr", methods=["GET", "POST"])
@@ -40,6 +45,7 @@ def handle_data_addr():
     json_to_api = {}
     addr_form = AddressForm(request.form)
     if addr_form.validate_on_submit():
+        print(addr_form.addresses())
         group_name = Addrgroup(project=addr_form.project_addr.data, name=addr_form.name_addrs.data, addresses=addr_form.addresses.data)
         db.session.add(group_name)
         db.session.commit()
@@ -76,14 +82,14 @@ def handle_data_app():
 def handle_data_accesses():
     json_to_api = {}
     name = AccessName(request.form)
-    src_addr = SelectAddrForm(request.form)
-    dst_addr = SelectAddrForm(request.form)
+    select_src_addr = SelectAddrForm(request.form)
+    select_dst_addr = SelectAddrForm(request.form)
     app = SelectAppForm(request.form)
-    if src_addr.validate_on_submit() and dst_addr.validate_on_submit():
+    if select_src_addr.validate_on_submit() and select_dst_addr.validate_on_submit():
         access = Accesses(name=name.name.data,
-                         src=src_addr.addr_groups.name,
-                         dst=dst_addr.addr_groups.name,
-                         app=app.app_groups.name)
+                          src=select_src_addr.src_groups.name,
+                          dst=select_dst_addr.dst_groups.name,
+                          app=app.app_groups.name)
         db.session.add(access)
         db.session.commit()
         json_to_api["name"] = access.name
@@ -92,6 +98,6 @@ def handle_data_accesses():
         json_to_api["app"] = access.app
         json.dumps(json_to_api)
         flash(json_to_api)
-        flash("Address group added", "success")
+        flash("Access created", "success")
         return redirect(url_for("main.home"))
     return redirect(url_for("main.about"))
