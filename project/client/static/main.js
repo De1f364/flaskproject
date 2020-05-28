@@ -45,4 +45,23 @@ $( document ).ready(function() {
           }
         });
 
+        // $("#add-project").click(function() {
+        //   $('<div>').attr({
+        //     class: 'form-group',
+        //     id: 'form-group-' + fieldNum
+        //   }).appendTo('.add_project')
+        //   $('<input>').attr({
+        //     class: 'form-control',
+        //     type: 'text',
+        //     id: 'addresses-' + fieldNum,
+        //     name: 'addresses-' + fieldNum,
+        //   }).appendTo('#form-group-' + fieldNum)
+        //   $('<button>').attr({
+        //       class:  'btn btn-success',
+        //       type: 'submit',
+        //       title: "Create project"
+        //   }).text("Create project").appendTo('#form-group-' + fieldNum)
+        //   fieldNum++
+        // });
+
 });

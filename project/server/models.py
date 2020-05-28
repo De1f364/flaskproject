@@ -86,3 +86,13 @@ class Accesses(db.Model):
         self.src = src
         self.dst = dst
         self.app = app
+
+
+class Projects(db.Model):
+    __tablename__ = "projects"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    project = db.Column(db.String(255), unique=True, nullable=False)
+
+    def __init__(self, project):
+        self.project = project

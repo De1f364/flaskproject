@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<style type="text/css">
+    .flex {display: flex; padding: 0 5px;}
+    .flex-item {  flex: 1 1 auto; margin: 0 5px;}
+        </style>
+
+<form action="{{ url_for('main.handle_data_accesses') }}" method="post" name="post">
+    {{ wtf.form_field(project) }}
+    {{ wtf.form_field(name) }}
+
+
+
+   {{ wtf.form_field(get_access_addr_src.src_groups) }}
+
+   {{ wtf.form_field(get_access_addr_dst.src_groups) }}
+
+   {{ wtf.form_field(get_access_app.app_groups) }}
+
+   <button class="btn btn-success" type="submit">Send</button>
+
+
+         </form>
+
+{% endblock %}
