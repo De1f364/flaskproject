@@ -10,19 +10,14 @@
    <div class="flex">
     <div class="flex-item">
         <form action="{{ url_for('main.get_accesses') }}" method="post" name="post">
+        <h3>Create new access</h3>
+           <hr><br>
    {{ wtf.form_field(select_project.project_select) }}
    {{ wtf.form_field(access_name.name) }}
     <button class="btn btn-success" type="submit">Create</button>
 </form></div>
 
        <div class="flex-item"></div>
-       <form action="{{ url_for('main.handle_data_project') }}" method="post" name="post">
-        <h5>Add new project</h5>
-<!--    <button class="btn btn-success" type="button" id="add-project">Add project</button>-->
-           <hr><br>
-           <div class="add_project">{{ wtf.form_field(new_project.project_name) }}</div>
-           <button class="btn btn-success" type="submit" id="create-project">Add project</button>
-</form></div>
               </div>
 
 {% endblock %}
