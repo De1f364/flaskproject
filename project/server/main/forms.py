@@ -33,21 +33,11 @@ class AppForm(FlaskForm):
 
 
 class SelectProjectForm(FlaskForm):
-    # project_choices = [(projects.id, projects.project) for projects in Projects.query.all()]
-    # project_select = SelectField("Project", choices=edit_user())
     project_select = QuerySelectField("Project",
                                       allow_blank=True,
                                       query_factory=lambda: Projects.query.all(),
                                       get_label="name")
     name = StringField("Access name")
-    # def __init__(self):
-    #     self.projects = [(projects.id, projects.project) for projects in Projects.query.all()]
-    #
-    # def edit_user(self):
-    #     # projects = [(projects.id, projects.project) for projects in Projects.query.all()]
-    #     return self.projects
-    #
-    # project_select = SelectField("Project", choices=edit_user())
 
 
 class AccessName(FlaskForm):
