@@ -2,7 +2,7 @@
 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FieldList, FormField
+from wtforms import StringField, SelectField, FieldList, FormField, TextAreaField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
@@ -21,7 +21,7 @@ class AddressForm(FlaskForm):
                                       query_factory=lambda: Projects.query.all(),
                                       get_label="name")
     name_addrs = StringField("Address groupname")
-    addresses = StringField("Addresses")
+    addresses = TextAreaField("Addresses")
 
 
 class AppForm(FlaskForm):
@@ -29,7 +29,7 @@ class AppForm(FlaskForm):
                                    query_factory=lambda: Projects.query.all(),
                                    get_label="name")
     name_apps = StringField("Apps groupname")
-    apps = StringField("Applications")
+    apps = TextAreaField("Applications")
 
 
 class SelectProjectForm(FlaskForm):

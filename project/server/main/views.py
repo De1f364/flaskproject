@@ -8,6 +8,7 @@ from project.server.models import Addrgroup, Appgroup, Accesses, Projects
 from project.server.main.forms import AddressForm, AppForm, SelectAddrFormSRC, SelectAddrFormDST, SelectAppForm, SelectProjectForm, AccessName, CreateProject
 
 import json
+import re
 
 main_blueprint = Blueprint("main", __name__)
 
@@ -18,6 +19,12 @@ def search_db(dbase, data, count):
         if int(str(data)[count:-1]) == i[0]:
             choice_name = i[1].lower()
             return choice_name
+
+
+def create_list(content):
+    content = re.findall('[a-zа-яё0-9.]+', content, flags=re.IGNORECASE)
+    print('CONTENT:', content)
+    return content
 
 
 @main_blueprint.route("/")
@@ -62,11 +69,12 @@ def handle_data_addr():
     addr_form = AddressForm(request.form)
     if addr_form.validate_on_submit():
         project_name = search_db(Projects, addr_form.project_select.data, 10)
-        group_name = Addrgroup(project=project_name, name=addr_form.name_addrs.data, addresses=addr_form.addresses.data)
+        addr_list = create_list(addr_form.addresses.data)
+        group_name = Addrgroup(project=project_name, name=addr_form.name_addrs.data, addresses=str(addr_list))
         db.session.add(group_name)
         db.session.commit()
         json_to_api["id"] = group_name.name
-        json_to_api["address"] = group_name.addresses
+        json_to_api["address"] = addr_list
         json_to_api["type"] = "ip"
         json.dumps(json_to_api)
         flash(json_to_api)
@@ -82,14 +90,15 @@ def handle_data_app():
     app_form = AppForm(request.form)
     if app_form.validate_on_submit():
         project_name = search_db(Projects, app_form.project_app.data, 10)
-        group_name = Appgroup(project=project_name, name=app_form.name_apps.data, apps=app_form.apps.data)
+        app_list = create_list(app_form.apps.data)
+        group_name = Appgroup(project=project_name, name=app_form.name_apps.data, apps=str(app_list))
         db.session.add(group_name)
         db.session.commit()
 
-        # json_to_api["id"] = group_name.name
-        # json_to_api["address"] = group_name.addresses
-        # json_to_api["type"] = "ip"
-        # json.dumps(json_to_api)
+        json_to_api["id"] = group_name.name
+        json_to_api["port"] = app_list
+        json_to_api["protocol"] = "tcp"
+        json.dumps(json_to_api)
         flash(json_to_api)
         flash("App group added", "success")
         return redirect(url_for("main.home"))
