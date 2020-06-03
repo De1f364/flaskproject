@@ -1,0 +1,31 @@
+{% extends "_base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+<style type="text/css">
+    .flex {display: flex; padding: 0 5px;}
+    .flex-item {  flex: 1 1 auto; margin: 0 5px;}
+        </style>
+
+<div class="body-content">
+  <div>
+    <h3>Create application</h3>
+    <hr><br>
+      <div class="flex">
+    <div class="flex-item">
+      <form name="post" method="post" action="{{ url_for('main.handle_data_create_app') }}">
+          <div class="addr-form">
+   {{ wtf.form_field(app.project) }}
+   {{ wtf.form_field(app.app_name) }}
+   {{ wtf.form_field(app.app_protocol) }}
+   {{ wtf.form_field(app.app_port) }}
+              </div>
+  <button class="btn btn-success" type="submit">Send</button>
+ </form>
+    </div>
+      <div class="flex-item"></div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -12,6 +12,12 @@
                       <li class="nav-item">
           <a class="nav-link" href="{{ url_for('main.add_project') }}">Add project</a>
         </li>
+                   <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.create_address') }}">Create address</a>
+        </li>
+                       <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.create_app') }}">Create app</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('main.create_addr_group') }}">Create address groups</a>
         </li>
@@ -19,22 +25,22 @@
           <a class="nav-link" href="{{ url_for('main.create_app_group') }}">Create app groups</a>
         </li>
 
-        {% if current_user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('user.members') }}">Members</a>
-        </li>
-        {% endif %}
-      </ul>
-      <!-- Login/Logout -->
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          {% if current_user.is_authenticated %}
-          <a class="nav-link" href="{{ url_for('user.logout') }}">Logout</a>
-          {% else %}
-          <a class="nav-link" href="{{ url_for('user.login') }}">Login</a>
-          {% endif %}
-        </li>
-      </ul>
+<!--        {% if current_user.is_authenticated %}-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="{{ url_for('user.members') }}">Members</a>-->
+<!--        </li>-->
+<!--        {% endif %}-->
+<!--      </ul>-->
+<!--      &lt;!&ndash; Login/Logout &ndash;&gt;-->
+<!--      <ul class="navbar-nav ml-auto">-->
+<!--        <li class="nav-item">-->
+<!--          {% if current_user.is_authenticated %}-->
+<!--          <a class="nav-link" href="{{ url_for('user.logout') }}">Logout</a>-->
+<!--          {% else %}-->
+<!--          <a class="nav-link" href="{{ url_for('user.login') }}">Login</a>-->
+<!--          {% endif %}-->
+<!--        </li>-->
+<!--      </ul>-->
     </div>
   </div>
 </nav>

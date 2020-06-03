@@ -42,6 +42,39 @@ class User(db.Model):
         return "<User {0}>".format(self.email)
 
 
+class Address(db.Model):
+
+    __tablename__ = "address"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    address = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), unique=True, nullable=False)
+    addr_type = db.Column(db.String(5), nullable=False)
+    project = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, address, name, addr_type, project):
+        self.address = address
+        self.name = name
+        self.addr_type = addr_type
+        self.project = project
+
+
+class Application(db.Model):
+    __tablename__ = "application"
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    port = db.Column(db.String(255), nullable=False)
+    name = db.Column(db.String(255), unique=True, nullable=False)
+    protocol = db.Column(db.String(5), nullable=False)
+    project = db.Column(db.String(255), nullable=False)
+
+    def __init__(self, port, name, protocol, project):
+        self.port = port
+        self.name = name
+        self.protocol = protocol
+        self.project = project
+
+
 class Addrgroup(db.Model):
 
     __tablename__ = "addrgroups"

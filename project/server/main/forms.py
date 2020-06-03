@@ -2,17 +2,39 @@
 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, FieldList, FormField, TextAreaField
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from wtforms import StringField, SelectField, FieldList, FormField, TextAreaField, SelectMultipleField
+from wtforms.ext.sqlalchemy.fields import QuerySelectField, QuerySelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 
 
 from project.server import bcrypt, db
-from project.server.models import Addrgroup, Appgroup, Projects
+from project.server.models import Address, Application, Addrgroup, Appgroup, Projects
 
 
 class CreateProject(FlaskForm):
     project_name = StringField("Project name")
+
+
+class CreateAddress(FlaskForm):
+    project = QuerySelectField("Project",
+                               allow_blank=True,
+                               query_factory=lambda: Projects.query.all(),
+                               get_label="name")
+    address_name = StringField("Address name")
+    address_type = SelectField("Select address type",
+                               choices=[('ip', 'ip'), ('dns', 'dns')])
+    address = StringField("Address")
+
+
+class CreateApp(FlaskForm):
+    project = QuerySelectField("Project",
+                               allow_blank=True,
+                               query_factory=lambda: Projects.query.all(),
+                               get_label="name")
+    app_name = StringField("Application name")
+    app_protocol = SelectField("Select protocol",
+                               choices=[('tcp', 'tcp'), ('udp', 'udp')])
+    app_port = StringField("Port")
 
 
 class AddressForm(FlaskForm):
@@ -22,7 +44,10 @@ class AddressForm(FlaskForm):
                                       get_label="name")
     name_addrs = StringField("Address groupname")
     addresses = TextAreaField("Addresses")
-
+    # addresses = QuerySelectMultipleField("Addresses",
+    #                                      allow_blank=True,
+    #                                      query_factory=lambda: Address.query.all(),
+    #                                      get_label="name")
 
 class AppForm(FlaskForm):
     project_app = QuerySelectField("Project",

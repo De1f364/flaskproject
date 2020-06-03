@@ -4,8 +4,8 @@
 from flask import render_template, Blueprint, request, flash, redirect, url_for
 
 from project.server import bcrypt, db
-from project.server.models import Addrgroup, Appgroup, Accesses, Projects
-from project.server.main.forms import AddressForm, AppForm, SelectAddrFormSRC, SelectAddrFormDST, SelectAppForm, SelectProjectForm, AccessName, CreateProject
+from project.server.models import Address, Application, Addrgroup, Appgroup, Accesses, Projects
+from project.server.main.forms import CreateAddress, CreateApp, AddressForm, AppForm, SelectAddrFormSRC, SelectAddrFormDST, SelectAppForm, SelectProjectForm, AccessName, CreateProject
 
 import json
 import re
@@ -22,7 +22,7 @@ def search_db(dbase, data, count):
 
 
 def create_list(content):
-    content = re.findall('[a-zа-яё0-9.]+', content, flags=re.IGNORECASE)
+    content = re.findall('[a-zа-яё0-9./_]+', content, flags=re.IGNORECASE)
     print('CONTENT:', content)
     return content
 
@@ -45,6 +45,20 @@ def add_project():
                            new_project=new_project)
 
 
+@main_blueprint.route("/create_address/")
+def create_address():
+    address = CreateAddress()
+    return render_template("main/create_address.html",
+                           address=address)
+
+
+@main_blueprint.route("/create_app/")
+def create_app():
+    app = CreateApp()
+    return render_template("main/create_app.html",
+                           app=app)
+
+
 @main_blueprint.route("/create_addr_group/")
 def create_addr_group():
     addr_form = AddressForm()
@@ -63,6 +77,56 @@ def create_app_group():
                            select_project=select_project)
 
 
+@main_blueprint.route("/handle_data_create_address", methods=["GET", "POST"])
+def handle_data_create_address():
+    json_to_api = {}
+    address = CreateAddress(request.form)
+    if address.validate_on_submit():
+        print('YOOOOO', address.project.data)
+        project_name = search_db(Projects, address.project.data, 10)
+        # addr_list = create_list(addr_form.addresses.data)
+        address_to_db = Address(project=project_name,
+                                name=address.address_name.data,
+                                addr_type=address.address_type.data,
+                                address=address.address.data)
+        db.session.add(address_to_db)
+        db.session.commit()
+        json_to_api["id"] = address.address_name.data
+        json_to_api["address"] = address.address.data
+        json_to_api["type"] = address.address_type.data
+        json.dumps(json_to_api)
+        flash(json_to_api)
+        flash("Address added", "success")
+        return redirect(url_for("main.create_address"))
+    flash("Address add failed", "error")
+    return redirect(url_for("main.create_address"))
+
+
+@main_blueprint.route("/handle_data_create_app", methods=["GET", "POST"])
+def handle_data_create_app():
+    json_to_api = {}
+    app = CreateApp(request.form)
+    if app.validate_on_submit():
+        print('YOOOOO', app.project.data)
+        project_name = search_db(Projects, app.project.data, 10)
+        # addr_list = create_list(addr_form.addresses.data)
+        app_to_db = Application(project=project_name,
+                                name=app.app_name.data,
+                                protocol=app.app_protocol.data,
+                                port=app.app_port.data)
+        db.session.add(app_to_db)
+        db.session.commit()
+        json_to_api["id"] = app.app_name.data
+        json_to_api["port"] = app.app_port.data
+        json_to_api["protocol"] = app.app_protocol.data
+        json.dumps(json_to_api)
+        flash(json_to_api)
+        flash("App added", "success")
+        return redirect(url_for("main.create_app"))
+    flash("App add failed", "error")
+    return redirect(url_for("main.create_app"))
+
+
 @main_blueprint.route("/handle_data_addr", methods=["GET", "POST"])
 def handle_data_addr():
     json_to_api = {}
@@ -74,8 +138,7 @@ def handle_data_addr():
         db.session.add(group_name)
         db.session.commit()
         json_to_api["id"] = group_name.name
-        json_to_api["address"] = addr_list
-        json_to_api["type"] = "ip"
+        json_to_api["addresses"] = addr_list
         json.dumps(json_to_api)
         flash(json_to_api)
         flash("Address group added", "success")
